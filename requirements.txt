@@ -1,4 +1,7 @@
-streamlit
+Django
+gunicorn
+whitenoise
+# Dependências do seu projeto que você tinha
 pandas
 numpy
 openpyxl

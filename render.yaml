@@ -1,0 +1,16 @@
+# Arquivo: render.yaml (VERSÃO 2)
+services:
+  - type: web
+    name: jcc-juridio-chicala-construcoes
+    env: python
+    branch: main
+    rootDir: .
+    # Build Command Original e Limpo (agora que o Django está no requirements.txt)
+    buildCommand: "pip install -r requirements.txt && python ./manage.py compilemessages && python ./manage.py collectstatic --no-input"
+    startCommand: "gunicorn jcc_site.wsgi"
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.5
+      - key: PYTHONPATH
+        value: /opt/render/project/src
