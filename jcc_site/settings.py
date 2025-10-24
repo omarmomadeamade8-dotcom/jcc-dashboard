@@ -5,20 +5,18 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- DADOS DA EMPRESA (CONTEXTO PARA TEMPLATES) ---
-COMPANY_EMAIL = 'contact@jccconstrucoes.co.mz'
+COMPANY_EMAIL = 'juridio@jcconstrucoes.co.mz ou geral@jcconstrucoes.co.mz'
 COMPANY_PHONE = '+258 84 123 4567'
 COMPANY_ADDRESS = 'Av. Principal 123, Maputo, Moçambique'
 SOCIAL_FACEBOOK = 'https://facebook.com/jccconstrucoes'
 SOCIAL_LINKEDIN = 'https://linkedin.com/company/jccconstrucoes'
 
 # --- CONFIGURAÇÕES DE AMBIENTE ---
-# NUNCA mantenha DEBUG=True e SECRET_KEY codificada em ambientes de produção!
-# Utilize variáveis de ambiente (Render Environment Variables)
 SECRET_KEY = 'django-insecure-4bs_f@(*)!yqw5ey(7mbvy9dee7=+81j-y)@tuoe%+f&(17e35'
 
-# MODO DE DESENVOLVIMENTO. Para produção no Render, esta variável deve ser False.
-DEBUG = True 
-# Adicione aqui o domínio do Render para permitir acesso
+# MODO DE PRODUÇÃO NO RENDER - ESSENCIAL PARA WHITENOISE
+DEBUG = False 
+# Hosts permitidos para o Render
 ALLOWED_HOSTS = ['jcc-juridio-chicala-construcoes.onrender.com', 'localhost', '127.0.0.1']
 
 # --- APLICAÇÕES ---
@@ -40,7 +38,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware', 
     
     'django.contrib.sessions.middleware.SessionMiddleware', 
-    'django.middleware.locale.LocaleMiddleware', # Para a gestão de idiomas
+    'django.middleware.locale.LocaleMiddleware', 
     
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,48 +86,33 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # --- INTERNACIONALIZAÇÃO ---
-LANGUAGE_CODE = 'pt-pt'# Definir Português como o idioma padrão
-TIME_ZONE = 'Africa/Maputo' # Recomendo fuso horário de Moçambique
+LANGUAGE_CODE = 'pt-pt'
+TIME_ZONE = 'Africa/Maputo'
 USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('pt', 'Português'),
-    ('en', 'English'),
-    ('fr', 'Français'), 
-    ('es', 'Español'), 
-    ('ar', 'العربية'), 
-    ('de', 'Deutsch'), 
+    ('pt', 'Português'), ('en', 'English'), ('fr', 'Français'), 
+    ('es', 'Español'), ('ar', 'العربية'), ('de', 'Deutsch'), 
 ]
 
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
-]
+LOCALE_PATHS = [ BASE_DIR / 'locale', ]
 
-# --- FICHEIROS ESTÁTICOS E MEDIA (CONFIGURAÇÃO FINAL) ---
+# --- FICHEIROS ESTÁTICOS E MEDIA ---
 STATIC_URL = '/static/' 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'), 
 ]
-# Esta linha garante que o 'collectstatic' armazene os ficheiros num único local
 STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
-# Configuração do WhiteNoise para comprimir e cachear ficheiros estáticos (ESSENCIAL)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# CORREÇÃO PARA O ERRO 'ValueError': Usamos a versão mais simples do WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # --- CONFIGURAÇÃO DE EMAIL ---
-# Modo de Desenvolvimento: Envia emails para a consola
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
-
-# Para DEPLOYMENT, mude:
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.seuservidor.co.mz'
-# (Adicionar as outras credenciais SMTP)
-
 DEFAULT_FROM_EMAIL = COMPANY_EMAIL
 SERVER_EMAIL = COMPANY_EMAIL
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
