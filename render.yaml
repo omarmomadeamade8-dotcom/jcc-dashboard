@@ -1,15 +1,20 @@
-# Arquivo: render.yaml (VERSÃO 2)
+# Configuração para implantação no Render.com (Versão Final)
 services:
   - type: web
     name: jcc-juridio-chicala-construcoes
     env: python
     branch: main
     rootDir: .
-    # Build Command Original e Limpo (agora que o Django está no requirements.txt)
+    # O buildCommand é executado APENAS durante a construção.
     buildCommand: "pip install -r requirements.txt && python ./manage.py compilemessages && python ./manage.py collectstatic --no-input"
-    startCommand: "gunicorn jcc_site.wsgi"
+    
+    # CORREÇÃO CRÍTICA: O Start Command executa a migração da base de dados (criação de tabelas)
+    # antes de iniciar o servidor Gunicorn.
+    startCommand: "python ./manage.py migrate --no-input && gunicorn jcc_site.wsgi"
+    
     plan: free
     envVars:
+      # Use a versão Python 3.11.5 que você especificou
       - key: PYTHON_VERSION
         value: 3.11.5
       - key: PYTHONPATH
