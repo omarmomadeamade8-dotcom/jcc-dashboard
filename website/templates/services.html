@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Serviços{% endblock %}
+
+{% block content %}
+    
+    <section class="page-intro">
+        <h1>{{ page_title }}</h1>
+        <p>Conheça as nossas áreas de especialidade. Clique em "Pedir Orçamento" para iniciar o seu projeto.</p>
+    </section>
+
+    <div class="service-grid">
+        {% for service in service_list %}
+            <div class="service-card">
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+                
+                <a href="#quote-form-section" 
+                   class="btn-primary show-quote-form-btn" 
+                   data-service="{{ service.title }}">
+                   Pedir Orçamento
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div style="height: 50px;"></div>
+
+    <section id="quote-form-section" class="request-quote-section" style="display: none;">
+        
+        <h2>Solicite o Seu Orçamento Personalizado</h2>
+        
+        <form action="{% url 'quote_request' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <fieldset>
+                <legend>1. Quem é o Solicitante? (Campos de Preenchimento Obrigatório marcados com *)</legend>
+                <div class="fieldset-group">
+                    
+                    <div>
+                        <label for="nome">Nome Completo *</label>
+                        <input type="text" id="nome" name="nome" placeholder="Seu Nome Completo" required>
+                    </div>
+                    
+                    <div>
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" placeholder="seu.email@exemplo.com" required>
+                    </div>
+
+                    <div>
+                        <label for="telefone">Telefone / WhatsApp *</label>
+                        <input type="text" id="telefone" name="telefone" placeholder="+258 84 123 4567 (com código do país)" required>
+                    </div>
+                    
+                    <div>
+                        <label for="empresa">Empresa (Opcional)</label>
+                        <input type="text" id="empresa" name="empresa" placeholder="Nome da Empresa">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>2. Detalhes do Projeto</legend>
+                
+                <div class="fieldset-group">
+                    <div>
+                        <label for="servico">Tipo de Serviço *</label>
+                        <select id="servico" name="servico" required>
+                            <option value="" disabled selected>Escolha uma opção</option>
+                            <option value="Construção Nova">Construção Nova (Residencial/Comercial)</option>
+                            <option value="Remodelação">Remodelação / Reabilitação</option>
+                            <option value="Infraestruturas">Engenharia Civil / Infraestruturas (Estradas, Pontes, etc.)</option>
+                            <option value="Industrial">Obras Industriais / Armazéns</option>
+                            <option value="Outro">Outro (Especificar na descrição)</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="localizacao">Localização da Obra *</label>
+                        <input type="text" id="localizacao" name="localizacao" placeholder="Ex: Maputo, Polana" required>
+                    </div>
+
+                    <div>
+                        <label for="area">Área Estimada (m²)</label>
+                        <input type="number" id="area" name="area" placeholder="Ex: 150 (m²)" min="1">
+                    </div>
+
+                    <div>
+                        <label for="prazo">Prazo Ideal de Início</label>
+                        <select id="prazo" name="prazo">
+                            <option value="Mais rápido possível" selected>O mais rápido possível</option>
+                            <option value="Curto Prazo">Curto Prazo (Próximos 3 meses)</option>
+                            <option value="Médio Prazo">Médio Prazo (3 a 6 meses)</option>
+                            <option value="Longo Prazo">Longo Prazo (Mais de 6 meses)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label for="descricao">Descrição Detalhada do Projeto *</label>
+                <textarea id="descricao" name="descricao" rows="5" placeholder="Descreva o que pretende, acabamentos desejados e requisitos especiais." required></textarea>
+
+                <label for="ficheiros">Anexar Ficheiros (Plantas, Esboços, Fotos)</label>
+                <input type="file" id="ficheiros" name="ficheiros" multiple accept=".pdf,.jpg,.jpeg,.png,.dwg" 
+                        style="padding: 10px; background-color: transparent; border: none; margin-bottom: 20px;">
+                <p style="font-size: 0.8em; color: var(--text-light);">Formatos aceites: PDF, JPG, PNG, DWG. Tamanho máximo 10MB.</p>
+
+            </fieldset>
+
+            <div class="consent-group">
+                <input type="checkbox" id="consentimento" name="consentimento" required>
+                <label for="consentimento">
+                    Declaro que li e concordo com a Política de Privacidade e Tratamento de Dados da JCC CONSTRUÇÕES, E.I. *
+                </label>
+            </div>
+
+            <button type="submit" class="btn-full-width">ENVIAR PEDIDO DE ORÇAMENTO</button>
+        </form>
+    </section>
+
+    <script src="{% static 'js/quote_form.js' %}"></script>
+
+{% endblock %}

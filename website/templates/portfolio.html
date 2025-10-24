@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Portfólio de Projetos{% endblock %}
+
+{% block content %}
+    
+    <div class="page-intro-header">
+        <h1>O Nosso Portfólio de Construção</h1>
+        <p>Conheça a qualidade e a diversidade dos projetos realizados pela JCC.</p>
+    </div>
+
+    <hr>
+    
+    <div class="portfolio-grid"> 
+        
+        {% for project in projects %}
+            <div class="project-card">
+                
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="Imagem do Projeto {{ project.title }}" class="project-image">
+                {% else %}
+                    <img src="{% static 'img/placeholder.png' %}" alt="Placeholder" class="project-image">
+                {% endif %}
+                
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    
+                    <p class="project-category">Tipo: {{ project.category }}</p>
+                    <p class="location">📍 {{ project.location }}</p>
+                    <p class="date">Concluído em: {{ project.date_completed|date:"F Y" }}</p> 
+                    
+                    <p class="description short-desc">
+                        {{ project.description|truncatechars:100 }}
+                        {% if project.description|length > 100 %}...{% endif %}
+                    </p>
+                    
+                    <div class="full-description" id="full-desc-{{ project.id }}" style="display: none;">
+                        <p class="description">{{ project.description }}</p>
+                    </div>
+
+                    <div class="button-container">
+                        <button class="btn-details toggle-details" data-target="#full-desc-{{ project.id }}" data-short-id="#short-desc-{{ project.id }}">
+                            Ver Detalhes
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        
+        {% empty %}
+            <p style="text-align: center; grid-column: 1 / -1;">Não há projetos disponíveis no momento. Por favor, verifique a sua base de dados.</p>
+        {% endfor %}
+        
+    </div>
+    
+{% endblock %}

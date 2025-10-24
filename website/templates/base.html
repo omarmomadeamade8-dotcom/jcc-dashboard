@@ -1,0 +1,96 @@
+{% load static %}
+{% load i18n %} <!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCC | {% block title %}Construções{% endblock %}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_head %}{% endblock %}
+
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-area">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo.jpeg' %}" alt="JCC Logo" class="logo"> 
+                <span>JCC CONSTRUÇÕES, E.I.</span>
+            </a>
+        </div>
+        <nav>
+            <a href="{% url 'home' %}" {% if request.path == '/' %}class="active"{% endif %}>{% trans "Home" %}</a>
+            <a href="{% url 'services' %}" {% if 'services' in request.path %}class="active"{% endif %}>{% trans "Serviços" %}</a>
+            <a href="{% url 'portfolio' %}" {% if 'portfolio' in request.path %}class="active"{% endif %}>{% trans "Portfólio" %}</a>
+            <a href="{% url 'gallery' %}" {% if 'galeria' in request.path %}class="active"{% endif %}>{% trans "Galeria" %}</a>
+            <a href="{% url 'contact' %}" {% if 'contactos' in request.path %}class="active"{% endif %}>{% trans "Contactos" %}</a>
+            <a href="{% url 'about' %}" {% if 'sobre-nos' in request.path %}class="active"{% endif %}>{% trans "Sobre Nós" %}</a>
+            
+            <form action="{% url 'set_language' %}" method="post" id="language-switcher" style="display: inline-flex; align-items: center; margin-left: 15px;">
+                {% csrf_token %}
+                {% get_current_language as CURRENT_LANGUAGE %}
+                {% get_available_languages as AVAILABLE_LANGUAGES %}
+                
+                <input name="next" type="hidden" value="{{ request.path }}">
+                
+                <select name="language" onchange="this.form.submit()" style="padding: 5px; border-radius: 4px; border: 1px solid #00bcd4; background-color: #2c3e50; color: white;">
+                    {% for lang_code, lang_name in AVAILABLE_LANGUAGES %}
+                        <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                            {{ lang_code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+
+        </nav>
+        <div class="social-icons">
+             {# Mantenha seus ícones sociais aqui #}
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; {% now "Y" %} JCC CONSTRUÇÕES, E.I. {% trans "Todos os direitos reservados." %}</p>
+        
+        {% block extra_js %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Lógica de toggle para o portfólio (mantida)
+                const toggleButtons = document.querySelectorAll('.toggle-details');
+
+                toggleButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const card = this.closest('.project-card');
+                        const shortDesc = card.querySelector('.short-desc');
+                        const fullDescDiv = card.querySelector('.full-description');
+                        
+                        if (fullDescDiv.style.display === 'none' || fullDescDiv.style.display === '') {
+                            shortDesc.style.display = 'none';
+                            fullDescDiv.style.display = 'block';
+                            this.textContent = 'Ocultar Detalhes';
+                        } else {
+                            fullDescDiv.style.display = 'none';
+                            shortDesc.style.display = 'block';
+                            this.textContent = 'Ver Detalhes';
+                        }
+                    });
+                });
+            });
+        </script>
+        {% endblock %}
+
+    </footer>
+
+</body>
+</html>

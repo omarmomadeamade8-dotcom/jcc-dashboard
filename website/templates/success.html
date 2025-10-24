@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+    /* Estilo para a caixa de mensagem de sucesso */
+    .success-container {
+        max-width: 800px;
+        margin: 80px auto;
+        padding: 60px 40px;
+        background-color: var(--card-bg); /* Fundo escuro do tema */
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        border: 2px solid var(--accent-cyan); /* Borda ciano para destaque */
+    }
+    .success-container h1 {
+        color: var(--accent-cyan);
+        font-size: 2.8em;
+        margin-bottom: 20px;
+    }
+    .success-container p {
+        color: var(--text-light);
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 40px;
+    }
+    .success-icon {
+        font-size: 5em;
+        color: var(--accent-cyan);
+        margin-bottom: 20px;
+    }
+</style>
+
+<section class="success-container">
+    
+    <div class="success-icon">&#10003;</div> <h1>{{ message_line1 }}</h1>
+    
+    <p>
+        {{ message_line2 }}
+    </p>
+    
+    <a href="{% url 'home' %}" class="btn-primary-large">Voltar à Página Principal</a>
+
+</section>
+{% endblock %}

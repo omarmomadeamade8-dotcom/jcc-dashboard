@@ -1,0 +1,64 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block title %}Página Principal{% endblock %}
+
+{% block content %}
+    
+    <section class="hero-section hero-full-width">
+        <div class="hero-content" style="max-width: 100%; margin: 0 auto; text-align: center;">
+            <p>Olá, Seja Bem Vindo(a)!</p>
+            
+            <h1 id="typewriter-text" style="text-align: center; margin: 0 auto;"></h1> 
+            
+            <p style="max-width: 80%; margin: 20px auto 0;">
+                A JCC Construções, E.I. é especializada em engenharia civil e construção,
+                oferecendo soluções inovadoras e de qualidade para os seus projetos.
+            </p>
+            
+            </div>
+        
+        {# Pontos decorativos (mantidos para o estilo) #}
+        <div class="hero-dot top-right"></div>
+        <div class="hero-dot bottom-left"></div>
+    </section>
+
+    {# Ligar o JavaScript do Typewriter #}
+    <script src="{% static 'js/typewriter.js' %}"></script>
+    
+    
+    <section class="hero-slider">
+        <div class="slider-track">
+            <img src="{% static 'img/slider/slide1.jpeg' %}" alt="Construção JCC 1">
+            <img src="{% static 'img/slider/slide2.jpeg' %}" alt="Construção JCC 2">
+            <img src="{% static 'img/slider/slide3.jpeg' %}" alt="Construção JCC 3">
+            
+            <img src="{% static 'img/slider/slide1.jpeg' %}" alt="Construção JCC 1">
+            <img src="{% static 'img/slider/slide2.jpeg' %}" alt="Construção JCC 2">
+            <img src="{% static 'img/slider/slide3.jpeg' %}" alt="Construção JCC 3">
+        </div>
+        <div class="hero-overlay">
+            <h1>Construindo o Futuro de Moçambique com Qualidade</h1>
+            <p>JCC: Integridade, Inovação e Excelência em cada projeto.</p>
+            <a href="{% url 'portfolio' %}" class="btn-details" style="font-weight: normal; margin-top: 10px;">Ver Projetos Recentes</a>
+        </div>
+    </section>
+
+
+    <section class="intro-text-section">
+    
+    <h2 style="color: var(--accent-cyan); font-size: 2.5em; text-align: center; margin-bottom: 20px;">A Liderança em Engenharia Civil</h2>
+    
+    <p style="font-size: 1.1em; margin-bottom: 25px; color: var(--text-light); max-width: 900px; margin: 0 auto 30px;">
+        Somos especialistas em construção civil, prontos para concretizar o seu projeto.<br>
+        A JURIDIO CHICALA CONSTRUÇÕES, E.I., está dedicada a redefinir o padrão de qualidade 
+        e fiabilidade no setor da construção em Moçambique, oferecendo soluções inovadoras e de qualidade.
+    </p>
+    
+    <a href="{% url 'about' %}" class="btn-details">Saiba Mais Sobre Nós</a>
+</section>
+
+
+{% endblock %}
+
+

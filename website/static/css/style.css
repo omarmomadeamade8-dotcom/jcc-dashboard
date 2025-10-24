@@ -1,0 +1,826 @@
+/* website/static/css/style.css - Versão Final Unificada (Tema Azul Escuro/Ciano) */
+
+/* === VARIÁVEIS DE CORES === */
+:root {
+    --primary-blue: #0b1a2e;   /* Azul escuro principal (Fundo do Header e Body) */
+    --secondary-blue: #1e3a8a; /* Azul um pouco mais claro (Fundo do Footer) */
+    --accent-cyan: #00bcd4;    /* Ciano vibrante (Destaque e Hover) */
+    --text-light: #e0e0e0;     /* Texto claro (Geral) */
+    --text-dark: #333333;      /* Texto escuro (Para áreas claras) */
+    --gradient-blue: linear-gradient(90deg, #007bff, #00bcd4); /* Gradiente de Ação */
+    --card-bg: #15273f;        /* Fundo dos Cards (Portfólio, Galeria) */
+}
+
+/* === RESET E ESTRUTURA BÁSICA === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; 
+    background-color: var(--primary-blue); /* Fundo Escuro */
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Adiciona padding no topo para compensar o header fixo */
+    padding-top: 60px; 
+}
+
+main {
+    flex: 1; 
+    /* Garante que o conteúdo central fica visível em todas as páginas */
+    padding: 20px 0; 
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* No tema escuro, o container deve ser transparente ou apenas ligeiramente diferente */
+    /* background-color: var(--primary-blue); /* Transparente / Mesma cor do body */
+    padding: 0; 
+}
+
+/* === CABEÇALHO (HEADER & NAV) === */
+header {
+    background-color: var(--primary-blue);
+    padding: 10px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Fixo no topo */
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.logo-area a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.logo-area img.logo {
+    height: 40px; 
+    margin-right: 10px;
+}
+
+header nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+    position: relative;
+}
+
+header nav a:hover, header nav a.active {
+    color: var(--accent-cyan);
+}
+
+/* Linha de destaque para link ativo/hover */
+header nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-cyan);
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+header nav a:hover::after, header nav a.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* === SECÇÃO HERO (HOMEPAGE) E TYPEWRITER === */
+.hero-section {
+    background: var(--primary-blue); 
+    padding: 80px 5% 40px;
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content: space-between; 
+    min-height: 80vh; 
+    position: relative;
+    overflow: hidden; 
+}
+
+.hero-content {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+    margin-right: 50px;
+    z-index: 2; 
+}
+
+/* Estilo para a frase Typewriter */
+.hero-content h1#typewriter-text {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    color: var(--text-light);
+    /* Garante que o Typewriter se destaca */
+    border-right: 3px solid var(--accent-cyan); 
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blink-caret 0.75s step-end infinite;
+}
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent-cyan); }
+}
+
+.hero-content p {
+    font-size: 1.1em;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+
+/* === LAYOUTS GERAIS === */
+h1, h2, h3 {
+    color: var(--accent-cyan); /* Títulos em Ciano */
+    margin-bottom: 20px;
+    text-align: left; /* Alinhamento esquerdo por padrão, pode ser sobrescrito */
+    padding-top: 10px;
+}
+
+/* Estilos Genéricos de Botão de Ação (CTA) */
+.btn-details, .btn-full-width, .cta-form button {
+    background: var(--gradient-blue);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
+    border: none;
+}
+
+.btn-details:hover, .btn-full-width:hover, .cta-form button:hover {
+    opacity: 0.8;
+}
+
+/* === FOOTER === */
+footer {
+    background-color: var(--secondary-blue);
+    color: var(--text-light);
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    /* Se for fixo, use position: fixed; bottom: 0; */
+}
+
+
+/* === ESTILOS DE GALERIA E PORTFÓLIO (AJUSTADOS PARA TEMA ESCURO) === */
+
+.portfolio-grid, .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.project-card, .gallery-item {
+    background-color: var(--card-bg); /* Fundo ligeiramente diferente do Body */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.project-card:hover, .gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.project-image {
+    width: 100%;
+    height: 250px; 
+    object-fit: cover; 
+}
+
+.project-card h3 {
+    color: var(--accent-cyan); 
+    margin: 15px 10px 5px;
+}
+
+.project-category, .gallery-item p {
+    color: var(--text-light); 
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 10px;
+}
+
+/* Galeria Visualização Inteira (Contém) */
+.gallery-item img {
+    width: 100%;
+    max-height: 250px; 
+    min-height: 150px; 
+    object-fit: contain; /* CRUCIAL: Mostra a imagem inteira */
+    background-color: var(--primary-blue); /* Fundo da miniatura */
+    padding: 10px; 
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 15px;
+    }
+    header nav {
+        margin-top: 10px;
+    }
+    header nav a {
+        margin: 0 10px;
+        font-size: 0.9em;
+    }
+    .hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 5%;
+    }
+    .hero-content {
+        margin-right: 0;
+        margin-bottom: 40px;
+    }
+    .hero-content h1#typewriter-text {
+        font-size: 2.5em;
+        justify-content: center;
+    }
+    .cta-form {
+        flex-direction: column;
+    }
+    .cta-form input, .cta-form button {
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .portfolio-grid, .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === AJUSTES DE LARGURA PARA O TYPEWRITER (SOLICITAÇÃO RECENTE) === */
+.hero-section.hero-full-width {
+    /* Remove o layout flexbox que forçava a imagem lateral */
+    display: block; 
+    text-align: center;
+}
+
+.hero-section.hero-full-width .hero-content {
+    /* Garante que o conteúdo de texto ocupa o centro da seção */
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.hero-section.hero-full-width h1#typewriter-text {
+    /* Centraliza o h1 na largura total */
+    display: inline-block; 
+    text-align: center;
+}
+
+/* === REGRAS DO SLIDER ROTATIVO (TRANSFERIDAS DO CÓDIGO ANTIGO) === */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Altura do slider */
+    overflow: hidden;
+    margin: 0 auto 30px; /* Centraliza e adiciona margem abaixo */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slider-track {
+    display: flex; 
+    width: 200%; /* Duas vezes a largura para o loop */
+    height: 100%;
+    animation: slide-animation 20s linear infinite; /* Animação rotativa */
+}
+
+.hero-slider img {
+    width: calc(100% / 6); 
+    height: 100%;
+    object-fit: cover; 
+    filter: brightness(0.6); /* Escurece a imagem para o texto se destacar */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; 
+    z-index: 10;
+    padding: 20px;
+}
+
+.hero-overlay h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: white;
+    border-bottom: none;
+    text-align: center; /* Garante que o texto do overlay está centrado */
+}
+
+/* Animação CSS: Move o bloco de imagens para a esquerda */
+@keyframes slide-animation {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+
+/* Ajuste Fino para o espaçamento da seção de introdução */
+.intro-text-section {
+    margin-top: 0; /* Remove completamente a margem superior */
+    margin-bottom: 20px; 
+    padding: 30px 5%; /* Mantém um padding razoável, se precisar reduzir, mude para 30px 5% */
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    text-align: center;
+}
+ 
+/* --- ESTILO PROFISSIONAL PARA O FORMULÁRIO DE PEDIDO DE ORÇAMENTO --- */
+
+.request-quote-section {
+    max-width: 1000px; /* Aumenta um pouco a largura máxima */
+    margin: 50px auto;
+    padding: 30px;
+    background-color: var(--card-bg); /* Fundo escuro do card */
+    border-radius: 12px; /* Borda mais arredondada */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra forte para destacar */
+}
+
+.request-quote-section h2 {
+    color: var(--accent-cyan);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Campos de Agrupamento - Flexível ou Grid */
+.fieldset-group {
+    /* Usamos grid para colocar vários campos na mesma linha (ex: Nome, Email, Telefone) */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; /* Espaço entre os campos */
+    margin-bottom: 25px;
+}
+
+/* Estilo para os fieldsets (as caixas de 1. Solicitante, 2. Detalhes) */
+.request-quote-section fieldset {
+    border: 1px solid var(--secondary-blue); /* Borda Azul Escuro */
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+.request-quote-section legend {
+    font-weight: bold;
+    color: var(--accent-cyan); /* Ciano para destaque do título da secção */
+    padding: 0 10px;
+    font-size: 1.2em;
+}
+
+/* Estilo para os Labels dos Campos */
+.request-quote-section label {
+    display: block;
+    font-weight: 500;
+    color: var(--text-light); 
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+
+/* Estilo para TODOS os campos de Input, Select e Textarea */
+.request-quote-section input:not([type="checkbox"]),
+.request-quote-section select,
+.request-quote-section textarea {
+    width: 100%;
+    padding: 12px; /* Aumenta o padding para serem mais altos */
+    background-color: var(--primary-blue); /* Fundo do campo igual ao fundo do body */
+    color: var(--text-light);
+    border: 1px solid var(--secondary-blue);
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+/* Destaque no foco */
+.request-quote-section input:focus,
+.request-quote-section select:focus,
+.request-quote-section textarea:focus {
+    border-color: var(--accent-cyan); /* Borda Ciano quando em foco */
+    outline: none;
+}
+
+/* Estilo específico para o campo de descrição (textarea) */
+.request-quote-section textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Estilo para o campo de consentimento (Checkbox) */
+.consent-group label {
+    display: inline;
+    margin-left: 10px;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+/* Estilo do botão (já deve existir, mas reforçamos) */
+.btn-full-width {
+    width: 100%;
+    background: var(--gradient-blue);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: opacity 0.3s;
+}
+
+.btn-full-width:hover {
+    opacity: 0.9;
+}
+
+/* ================================================= */
+/* ESTILOS ESPECÍFICOS PARA O PORTFÓLIO E BOTÕES */
+/* ================================================= */
+
+.project-card {
+    /* Usa Flexbox para organizar o conteúdo verticalmente */
+    display: flex;
+    flex-direction: column; 
+    
+    /* Garante que o conteúdo estica para preencher a carta */
+    height: 100%; 
+    
+    /* ... (outros estilos de card, como cor de fundo e sombra) ... */
+    border-radius: 8px;
+    background-color: #1a2333; /* Exemplo baseado na sua imagem */
+    padding-bottom: 20px;
+}
+
+.project-info {
+    padding: 15px 20px;
+    flex-grow: 1; /* Permite que esta seção ocupe o máximo de espaço vertical */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Garante que o botão vai para o fundo da área de informação */
+.project-card .btn-details {
+    /* Centraliza o botão dentro da coluna do project-info */
+    align-self: center; 
+    
+    /* Espaço para separar o botão do texto acima */
+    margin-top: 20px; 
+    
+    /* Estilos do botão */
+    display: inline-block;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    /* Adiciona o gradiente que aparece na sua imagem */
+    background: linear-gradient(to right, #00bfff, #0080ff); 
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.project-card .btn-details:hover {
+    background: linear-gradient(to right, #0080ff, #00bfff);
+}
+
+/* ================================================= */
+/* 1. SEÇÃO DO PORTFÓLIO E CARTÕES (PROFISSIONAL) */
+/* ================================================= */
+
+.page-intro-header {
+    /* Garante que o cabeçalho secundário da página está centrado e formatado */
+    text-align: center;
+    padding: 40px 0 20px 0;
+}
+
+.portfolio-grid {
+    /* Usa CSS Grid para um layout responsivo e limpo */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px; /* Espaçamento profissional entre os cartões */
+    padding: 30px 0;
+}
+
+.project-card {
+    /* Estilo do cartão com sombra subtil e cantos arredondados */
+    background-color: #1a2333; /* Cor de fundo escura do seu tema */
+    border-radius: 12px;
+    overflow: hidden; /* Garante que a imagem se ajusta perfeitamente */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; /* Organiza o conteúdo verticalmente */
+}
+
+.project-card:hover {
+    /* Efeito subtil ao passar o mouse */
+    transform: translateY(-5px); 
+}
+
+.project-image {
+    width: 100%;
+    height: 250px; /* Altura fixa para uniformidade das imagens */
+    object-fit: cover; /* Garante que a imagem preenche sem distorcer */
+    display: block;
+}
+
+.project-info {
+    /* Área de texto que cresce para empurrar o botão para baixo */
+    padding: 20px;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+.project-info h3 {
+    color: #00bfff; /* Cor de destaque para o título */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.project-info p {
+    color: #b0c4de; /* Cor de texto mais clara para contraste */
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.project-category, .location, .date {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+/* ================================================= */
+/* 2. BOTÃO E ÁREA DE DETALHES */
+/* ================================================= */
+
+.button-container {
+    /* Container para centralizar o botão na parte inferior */
+    margin-top: auto; /* Empurra o container para o fundo do flexbox */
+    padding-top: 15px;
+    text-align: center; /* Centraliza o botão */
+}
+
+.btn-details {
+    /* Estilo de botão de gradiente profissional */
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(to right, #0080ff, #00bfff); /* Gradiente azul profissional */
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-details:hover {
+    /* Efeito hover sutil */
+    background: linear-gradient(to right, #00bfff, #0080ff); 
+    box-shadow: 0 0 10px rgba(0, 128, 255, 0.5);
+}
+
+/* Estilo para a descrição que fica oculta/visível */
+.full-description {
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+    transition: all 0.5s ease;
+}
+
+/* ESTILOS PARA O FORMULÁRIO DE ORÇAMENTO/CONTACTO */
+.form-grid-container {
+    /* Use esta classe na DIV que envolve o seu formulário */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 20px; /* Espaço entre os campos */
+    padding: 20px;
+}
+
+.form-field-full-width {
+    /* Esta classe pode ser aplicada à Mensagem ou a outros campos grandes */
+    grid-column: 1 / -1; /* Ocupa as duas colunas */
+}
+
+/* Garante que os campos de input e o textarea ocupam 100% do seu container */
+.form-grid-container input[type="text"],
+.form-grid-container input[type="email"],
+.form-grid-container textarea,
+.form-grid-container select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px; /* Espaço entre a label e o campo */
+    border: 1px solid #444; /* Borda sutil */
+    background-color: #222c3e; /* Fundo escuro */
+    color: white;
+    border-radius: 4px;
+}
+
+.form-grid-container label {
+    display: block; /* Garante que a label está na sua própria linha acima do input */
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* Estilo para o botão Enviar Mensagem */
+.form-grid-container button[type="submit"] {
+    grid-column: 2 / 3; /* Coloca o botão na segunda coluna */
+    justify-self: end; /* Alinha o botão à direita */
+    /* ... (adicione o seu estilo de gradiente aqui) ... */
+    padding: 12px 30px;
+}
+
+/* ================================================= */
+/* ESTILOS PROFISSIONAIS PARA FORMULÁRIOS DE CONTACTO */
+/* ================================================= */
+
+.form-grid-2-cols {
+    /* Layout principal: 2 colunas para campos pequenos */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px 40px; /* Espaço amplo e profissional entre campos */
+    padding: 30px 0;
+}
+
+.form-field-group {
+    /* Usa Flexbox para organizar a label acima do input */
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    /* Força campos como Mensagem a ocupar 100% da largura */
+    grid-column: 1 / -1; 
+}
+
+/* Estilo para todos os campos de input/textarea/select */
+.form-field-group input,
+.form-field-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 8px; /* Separa a label do campo */
+    border: 1px solid #444; 
+    background-color: #0b1a2c; /* Fundo escuro sutil */
+    color: #f0f0f0;
+    border-radius: 6px;
+    box-sizing: border-box; 
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-field-group input:focus,
+.form-field-group textarea:focus {
+    border-color: #00bfff; /* Foco profissional em azul */
+    outline: none;
+}
+
+.form-field-group label {
+    font-weight: 600;
+    color: #00bfff; /* Cor de destaque para os rótulos */
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+/* Estilo para o botão de Envio */
+.submit-area {
+    text-align: center; /* Centraliza o botão dentro da área de largura total */
+    padding-top: 20px;
+}
+
+.btn-submit-contact {
+    /* Estilo do botão de gradiente */
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(to right, #0080ff, #00bfff); 
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-submit-contact:hover {
+    background: linear-gradient(to right, #00bfff, #0080ff);
+    box-shadow: 0 5px 15px rgba(0, 128, 255, 0.4);
+}
+
+/* ================================================= */
+/* 1. LAYOUT PRINCIPAL DA PÁGINA DE CONTACTO */
+/* ================================================= */
+
+.contact-grid {
+    /* Layout para a seção Detalhes + Formulário lado a lado */
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Detalhes (1) e Formulário (2) */
+    gap: 40px;
+    padding: 40px 0;
+}
+
+.contact-details {
+    /* Estilo para a coluna de informações */
+    padding: 20px;
+    background-color: #1a2333; /* Cor de fundo para contraste */
+    border-radius: 8px;
+}
+
+/* ================================================= */
+/* 2. ESTILOS DO FORMULÁRIO (PROFISSIONAL) */
+/* ================================================= */
+
+.form-grid-2-cols {
+    /* Usa CSS Grid para o layout de duas colunas */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 2 colunas em desktop */
+    gap: 20px 30px; /* Espaçamento limpo e profissional */
+}
+
+.form-field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    /* Mensagem e Botão ocupam a largura total */
+    grid-column: 1 / -1; 
+}
+
+/* Estilo dos Inputs */
+.form-field-group input,
+.form-field-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 8px; 
+    border: 1px solid #444; 
+    background-color: #0b1a2c; 
+    color: #f0f0f0;
+    border-radius: 6px;
+    box-sizing: border-box; 
+    font-size: 1em;
+}
+
+.form-field-group label {
+    font-weight: 600;
+    color: #00bfff; /* Cor de destaque para os rótulos */
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+/* Estilo do Botão */
+.submit-area {
+    text-align: center; /* Centraliza o botão dentro da área full-width */
+    padding-top: 10px;
+}
+
+.btn-submit-contact {
+    /* Usa o seu gradiente profissional */
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(to right, #0080ff, #00bfff); 
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+/* Media Query para responsividade (em telemóveis, passa a ser uma coluna) */
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr; /* Stack em telemóveis */
+    }
+}

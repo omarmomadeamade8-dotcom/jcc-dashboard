@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Sobre a Empresa{% endblock %}
+
+{% block content %}
+    
+    <section class="history">
+        <h2>A Nossa História</h2>
+        
+        <p>Nascemos em 2019 com um propósito claro: redefinir o padrão de qualidade e confiabilidade na construção civil. Num período de crescimento e desafios para o setor, posicionámo-nos como uma empresa ágil e moderna, pronta para responder às exigências do mercado com rigor técnico e soluções inteligentes.</p>
+        
+        <p>Desde o nosso primeiro projeto, a <strong>{{ company_name }}</strong> tem-se dedicado a transformar visões em estruturas concretas e duradouras, honrando cada prazo e orçamento. O nosso rápido crescimento desde 2019 até hoje é um testemunho da confiança que os nossos clientes depositam na nossa equipa qualificada e na nossa ética de trabalho inabalável.</p>
+    </section>
+
+    <hr>
+
+    <section class="mission-vision">
+        <h2>Missão e Visão</h2>
+
+        <h3>Nossa Missão:</h3>
+        <p>Oferecer excelência em cada projeto, superando as expectativas do cliente através da inovação e sustentabilidade, garantindo a construção de estruturas duradouras e de alto valor.</p>
+
+        <h3>Nossa Visão:</h3>
+        <p>Ser a empresa de construção líder e mais confiável do país, reconhecida pela nossa integridade, qualidade inabalável e por moldar o futuro do ambiente construído em Moçambique.</p>
+    </section>
+    
+    <hr>
+
+    <section class="excellence">
+        <h2>O Nosso Compromisso com a Excelência</h2>
+        
+        <p>Somos movidos pela excelência em cada fase do empreendimento, desde o planeamento inicial até à entrega final da chave. Isto significa:</p>
+
+        <ul>
+            <li><strong>Rigor e Qualidade:</strong> Utilizamos materiais de primeira linha e aplicamos técnicas construtivas inovadoras para garantir a segurança e a longevidade de cada obra.</li>
+            <li><strong>Inovação Sustentável:</strong> Olhamos para o futuro. Incorporamos práticas de construção sustentável e eficiência energética para criar edifícios que não só são belos e funcionais, mas também responsáveis com o meio ambiente.</li>
+            <li><strong>Foco no Cliente:</strong> Acreditamos que a comunicação transparente e o compromisso com a satisfação do cliente são a base de qualquer parceria de sucesso. A sua visão é o nosso projeto mais importante.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section class="why-us"> 
+        <h2>Porquê Escolher-nos?</h2>
+        
+        <p>Apesar do nosso percurso recente, a nossa solidez e dinamismo permitem-nos enfrentar projetos de qualquer dimensão e complexidade. Escolher a <strong>{{ company_name }}</strong> é optar por um parceiro que combina a energia de uma empresa nova com o profissionalismo e a estabilidade essenciais para construir o seu legado.</p>
+        
+        <p>Convidamo-lo a construir connosco.</p>
+    </section>
+    
+    <p><a href="{% url 'home' %}">« Voltar para a Página Principal</a></p>
+
+{% endblock %}
