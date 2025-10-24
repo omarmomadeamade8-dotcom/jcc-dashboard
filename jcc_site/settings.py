@@ -16,8 +16,12 @@ SECRET_KEY = 'django-insecure-4bs_f@(*)!yqw5ey(7mbvy9dee7=+81j-y)@tuoe%+f&(17e35
 
 # MODO DE DESENVOLVIMENTO
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]'] 
-# Para DEPLOYMENT, mude: DEBUG = False, ALLOWED_HOSTS = ['seu-dominio.co.mz', 'IP_do_Servidor']
+# Adicione aqui o domínio do Render para permitir acesso
+ALLOWED_HOSTS = ['jcc-juridio-chicala-construcoes.onrender.com', 'localhost', '127.0.0.1']
+
+    # IMPORTANTE: Se você tiver um ficheiro .env para variáveis SECRET_KEY ou DEBUG, use-o
+    # para definir esta lista de forma dinâmica em vez de codificar.
+    # Mas para o propósito do deploy no Render, esta correção direta é necessária.
 
 # --- APLICAÇÕES ---
 INSTALLED_APPS = [
