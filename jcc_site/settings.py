@@ -12,16 +12,14 @@ SOCIAL_FACEBOOK = 'https://facebook.com/jccconstrucoes'
 SOCIAL_LINKEDIN = 'https://linkedin.com/company/jccconstrucoes'
 
 # --- CONFIGURAÇÕES DE AMBIENTE ---
+# NUNCA mantenha DEBUG=True e SECRET_KEY codificada em ambientes de produção!
+# Utilize variáveis de ambiente (Render Environment Variables)
 SECRET_KEY = 'django-insecure-4bs_f@(*)!yqw5ey(7mbvy9dee7=+81j-y)@tuoe%+f&(17e35'
 
-# MODO DE DESENVOLVIMENTO
-DEBUG = True
+# MODO DE DESENVOLVIMENTO. Para produção no Render, esta variável deve ser False.
+DEBUG = True 
 # Adicione aqui o domínio do Render para permitir acesso
 ALLOWED_HOSTS = ['jcc-juridio-chicala-construcoes.onrender.com', 'localhost', '127.0.0.1']
-
-    # IMPORTANTE: Se você tiver um ficheiro .env para variáveis SECRET_KEY ou DEBUG, use-o
-    # para definir esta lista de forma dinâmica em vez de codificar.
-    # Mas para o propósito do deploy no Render, esta correção direta é necessária.
 
 # --- APLICAÇÕES ---
 INSTALLED_APPS = [
@@ -35,9 +33,11 @@ INSTALLED_APPS = [
     'website', 
 ]
 
-# --- MIDDLEWARE (COM ORDEM CORRETA) ---
+# --- MIDDLEWARE (COM ORDEM CORRETA PARA WHITENOISE) ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # WHITENOISE: Adicionado aqui, logo abaixo do SecurityMiddleware
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     
     'django.contrib.sessions.middleware.SessionMiddleware', 
     'django.middleware.locale.LocaleMiddleware', # Para a gestão de idiomas
@@ -106,13 +106,16 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
-# --- FICHEIROS ESTÁTICOS E MEDIA ---
-STATIC_URL = 'static/' 
+# --- FICHEIROS ESTÁTICOS E MEDIA (CONFIGURAÇÃO FINAL) ---
+STATIC_URL = '/static/' 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'), 
 ]
+# Esta linha garante que o 'collectstatic' armazene os ficheiros num único local
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
-STATIC_ROOT = BASE_DIR / 'staticfiles' # <-- ESSENCIAL PARA PRODUÇÃO!
+# Configuração do WhiteNoise para comprimir e cachear ficheiros estáticos (ESSENCIAL)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
