@@ -1,12 +1,11 @@
-# Configuração para implantação no Render.com (Versão Final)
 services:
   - type: web
     name: jcc-juridio-chicala-construcoes
     env: python
     branch: main
     rootDir: .
-    # CORREÇÃO CRÍTICA: Movemos o comando 'migrate' para o BuildCommand.
-    # Isto garante que as tabelas SQLite sejam criadas e persistidas ANTES do servidor iniciar.
+    # CORREÇÃO CRÍTICA: O comando 'migrate' é executado no BuildCommand para aplicar 
+    # as migrações no banco de dados PostgreSQL ANTES do servidor Gunicorn iniciar.
     buildCommand: "pip install -r requirements.txt && python ./manage.py compilemessages && python ./manage.py collectstatic --no-input && python ./manage.py migrate --no-input"
     
     # O Start Command agora apenas inicia o servidor Gunicorn.

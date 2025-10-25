@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import dj_database_url # <--- IMPORTADO AQUI
 
 # Definição padrão do BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,13 +71,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'jcc_site.wsgi.application'
 
-# --- BASE DE DADOS ---
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# --- BASE DE DADOS (CONFIGURAÇÃO PostgreSQL/SQLite Dinâmica) ---
+# SE EXISTIR A VARIAVEL DATABASE_URL (RENDER), USA POSTGRESQL. CASO CONTRÁRIO, USA SQLITE.
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ['DATABASE_URL'],
+            conn_max_age=600,
+            conn_health_check=True,
+        )
     }
-}
+else:
+    # Caso contrário, usa SQLite localmente (para desenvolvimento)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
