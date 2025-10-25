@@ -5,12 +5,12 @@ services:
     env: python
     branch: main
     rootDir: .
-    # O buildCommand é executado APENAS durante a construção.
-    buildCommand: "pip install -r requirements.txt && python ./manage.py compilemessages && python ./manage.py collectstatic --no-input"
+    # CORREÇÃO CRÍTICA: Movemos o comando 'migrate' para o BuildCommand.
+    # Isto garante que as tabelas SQLite sejam criadas e persistidas ANTES do servidor iniciar.
+    buildCommand: "pip install -r requirements.txt && python ./manage.py compilemessages && python ./manage.py collectstatic --no-input && python ./manage.py migrate --no-input"
     
-    # CORREÇÃO CRÍTICA: O Start Command executa a migração da base de dados (criação de tabelas)
-    # antes de iniciar o servidor Gunicorn.
-    startCommand: "python ./manage.py migrate --no-input && gunicorn jcc_site.wsgi"
+    # O Start Command agora apenas inicia o servidor Gunicorn.
+    startCommand: "gunicorn jcc_site.wsgi"
     
     plan: free
     envVars:
