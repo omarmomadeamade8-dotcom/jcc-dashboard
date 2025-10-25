@@ -2,7 +2,9 @@ Django==5.0.7
 gunicorn
 whitenoise
 # Dependências da aplicação (website, app_jcc.py, etc.)
-streamlit 
+dj-database-url
+psycopg2-binary
+streamlit
 pandas
 numpy
 openpyxl
