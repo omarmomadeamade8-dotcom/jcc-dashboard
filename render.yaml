@@ -6,8 +6,7 @@ services:
     rootDir: .
     # CORREÇÃO CRÍTICA: O comando 'migrate' é executado no BuildCommand para aplicar 
     # as migrações no banco de dados PostgreSQL ANTES do servidor Gunicorn iniciar.
-    buildCommand: "pip install -r requirements.txt && python ./manage.py compilemessages && python ./manage.py collectstatic --no-input && python ./manage.py migrate --no-input"
-    
+    buildCommand: pip install -r requirements.txt && python ./manage.py compilemessages && python ./manage.py collectstatic --noinput && python ./manage.py migrate --noinput
     # O Start Command agora apenas inicia o servidor Gunicorn.
     startCommand: "gunicorn jcc_site.wsgi"
     
