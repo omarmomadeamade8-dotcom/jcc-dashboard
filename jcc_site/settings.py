@@ -72,13 +72,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'jcc_site.wsgi.application'
 
 # --- BASE DE DADOS (CONFIGURAÇÃO PostgreSQL/SQLite Dinâmica) ---
-# SE EXISTIR A VARIAVEL DATABASE_URL (RENDER), USA POSTGRESQL. CASO CONTRÁRIO, USA SQLITE.
+# AGORA CORRIGIDO, REMOVENDO ARGUMENTOS INCOMPATÍVEIS COM A VERSÃO ATUAL DO dj-database-url
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ['DATABASE_URL'],
-            conn_max_age=600,
-            conn_health_check=True,
+            # conn_max_age=600, <--- Removido
+            # conn_health_check=True, <--- Removido
         )
     }
 else:
