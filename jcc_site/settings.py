@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-import dj_database_url # <--- IMPORTADO AQUI
+import dj_database_url
 
 # Definição padrão do BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,7 +13,7 @@ SOCIAL_FACEBOOK = 'https://facebook.com/jccconstrucoes'
 SOCIAL_LINKEDIN = 'https://linkedin.com/company/jccconstrucoes'
 
 # --- CONFIGURAÇÕES DE AMBIENTE ---
-SECRET_KEY = 'django-insecure-4bs_f@(*)!yqw5ey(7mbvy9dee7=+81j-y)@tuoe%+f&(17e35'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-4bs_f@(*)!yqw5ey(7mbvy9dee7=+81j-y)@tuoe%+f&(17e35')
 
 # MODO DE PRODUÇÃO NO RENDER - ESSENCIAL PARA WHITENOISE
 DEBUG = False 
@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'website', 
+    # django-storages não é mais estritamente necessário para esta solução,
+    # mas se o usarmos no futuro, deve estar aqui.
 ]
 
 # --- MIDDLEWARE (COM ORDEM CORRETA PARA WHITENOISE) ---
@@ -72,13 +74,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'jcc_site.wsgi.application'
 
 # --- BASE DE DADOS (CONFIGURAÇÃO PostgreSQL/SQLite Dinâmica) ---
-# AGORA CORRIGIDO, REMOVENDO ARGUMENTOS INCOMPATÍVEIS COM A VERSÃO ATUAL DO dj-database-url
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ['DATABASE_URL'],
-            # conn_max_age=600, <--- Removido
-            # conn_health_check=True, <--- Removido
         )
     }
 else:
@@ -111,18 +110,29 @@ LANGUAGES = [
 
 LOCALE_PATHS = [ BASE_DIR / 'locale', ]
 
-# --- FICHEIROS ESTÁTICOS E MEDIA ---
+# ------------------------------------------------------------------
+# CONFIGURAÇÕES FINAIS DE FICHEIROS ESTÁTICOS E MEDIA (CORRIGIDO)
+# ------------------------------------------------------------------
+
+# 1. Configuração de STATIC FILES para Produção
 STATIC_URL = '/static/' 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'), 
 ]
+# CRÍTICO: O WhiteNoise recolhe daqui
 STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
-# CORREÇÃO PARA O ERRO 'ValueError': Usamos a versão mais simples do WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# CORREÇÃO CRÍTICA: Remove a linha que causava conflito com ImageField em DEBUG=False
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage' 
 
+# 2. Configuração de MEDIA FILES (Imagens dos Modelos)
 MEDIA_URL = '/media/'
+# O Render NÃO suporta media files (imagens do utilizador) sem S3, mas o Django precisa que exista.
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# 3. Middleware de Segurança (Para Render)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True # Força o HTTPS
 
 # --- CONFIGURAÇÃO DE EMAIL ---
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
