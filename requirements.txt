@@ -1,5 +1,6 @@
 Django==5.0.7
 gunicorn
+whitenoise
 # Dependências da aplicação (website, app_jcc.py, etc.)
 dj-database-url
 psycopg2-binary
