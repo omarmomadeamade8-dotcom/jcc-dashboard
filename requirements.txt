@@ -1,7 +1,8 @@
-Django
+Django==5.0.7
 gunicorn
 whitenoise
-# Dependências do seu projeto que você tinha
+# Dependências da aplicação (website, app_jcc.py, etc.)
+streamlit 
 pandas
 numpy
 openpyxl
